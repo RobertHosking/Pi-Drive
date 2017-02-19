@@ -1,0 +1,36 @@
+.folder{
+padding: 1.2em;
+margin: 1em;
+color: #404040;
+font-weight: bold;
+}
+.file{
+padding: 1.2em;
+margin: 1em;
+}
+.navbar-lower{
+	position: fixed;
+	top: 65px;
+	z-index: 1000;
+	width: 100%;
+}
+#sidebar-wrapper{
+	top:65px;
+	z-index: 1;
+}
+.breadcrumb h3{
+	font-weight: bold;
+	font-size: .8em;
+    font-family: helvetica;
+    margin: 0;
+	padding: 0;
+}
+.breadcrumb a{
+	font-weight: bold;
+	font-size: .8em;
+	font-family: helvetica;
+	color: #fff;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
