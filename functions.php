@@ -9,7 +9,7 @@ function list_file($file){
         // If MP4
         if($ext == "mp4"){
             // IF IN MOVIES
-            if($_SESSION['dir'] == 'drive/Drive/Movies/' || $_SESSION['dir'] == 'drive/Drive/Movies/Favorites/'){
+            if(substr($_SESSION['dir'],0,19) == "drive/Drive/Movies/"){
                 if(!file_exists($assets.basename($file, ".mp4").".jpg")){
                     $movie = explode('(',$file);
                     $json = substr(file_get_contents('https://api.themoviedb.org/3/search/movie?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query='.urlencode($movie[0]).'&callback=?'), 2, -1);

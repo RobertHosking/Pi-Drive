@@ -32,8 +32,15 @@ function reload(){
                window.location.reload();
         }, 100); 
 }
-function focus(obj){
-    $(obj).removeClass('btn-secondary');
-    $(obj).addClass('btn-info');
-
+function focus_this(obj, session){
+  var selected = $(':focus');
+  var name = selected.attr('id');
+  if(selected.hasClass('folder')){
+    var options = '<button class="btn btn-default" data-toggle="modal" data-target="#renameModal">Rename</button><button class="btn btn-danger" data-toggle="modal" data-target="#trashModal">Move to Trash</button> ';
+    $('#file-options').html(options);
+  }
 }
+function focus_lost(){
+  setTimeout(function(){ $('#file-options').html(''); }, 3000);
+}
+

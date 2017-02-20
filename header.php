@@ -61,8 +61,9 @@ foreach($result as $user){
   <div class="collapse navbar-collapse collapse-buttons">
 
 			<div class="col-sm-1">
-				<button style="margin:10px;" class='btn btn-danger navbar-search pull-left' onclick="location.href='<%= new_report_path%>'">New Report</button>
+				<button style="margin:10px;" class='btn btn-danger navbar-search pull-left' data-toggle="modal" data-target="#myModal">Upload</button>
 			</div>
+			
 			<div class="col-sm-4">
 			    <?php
 			    $crumbs = explode("/", $_SESSION['dir']);
@@ -83,10 +84,58 @@ foreach($result as $user){
    			    echo $breadcrumb;
 			    ?>
 			</div>
+				<div id="file-options" class="col-sm-4">
+					
+					
+				</div>
 			<div class="col-sm-4 pull-right" style="text-align:right">
 				<?php echo $online_bar;?>
 			</div>
-	
-
   </div>
+  
 </nav>
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Upload File to <?php echo $_SESSION['dir'];?></h4>
+      </div>
+      <div class="modal-body">
+      	<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="urlField">From url</label>  
+  <div class="col-md-4">
+  <input id="urlField" name="urlField" type="text" placeholder="e.x. https://www.fileserver.com/file.ext" class="form-control input-sm">
+    
+  </div>
+</div>
+<!-- File Button --> 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="fileButton"></label>
+  <div class="col-md-4">
+    <input id="fileButton" name="fileButton" class="input-file" type="file">
+  </div>
+</div>
+
+</fieldset>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Go!</button>
+      </div>
+    </div>
+  </div>
+</div>
