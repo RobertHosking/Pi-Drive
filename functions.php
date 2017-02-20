@@ -31,7 +31,7 @@ function list_file($file){
             
                 echo '<button type="button" onclick="location.href=\''.$_SESSION['dir'].$file.'\';" class="btn file"><i class="fa fa-film"></i>'.$tab.$file.$tab.'</button>';
             }else{
-            echo "<a class='file' title='".basename($file, ".mp4")."' onclick='online(1)' href='".$_SESSION['dir'].$file."'></a>";
+            echo "<a class='file' title='".basename($file, ".mp4")."' onclick='online(1)' href='".$_SESSION['dir'].$file."'>".$file."</a>";
             }
         }
         if($ext == "jpg" || $ext == "png"){
