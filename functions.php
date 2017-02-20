@@ -1,6 +1,9 @@
 <?php
 function list_file($file){
-    $assets = 'drive/Downloads/Pi-Drive/';
+    $assets = 'drive/Temp/Pi-Drive/Posters/';
+    if (!file_exists($assets)) {
+        mkdir($assets, 0777, true);
+    }
     if(is_file($_SESSION['dir'].$file)){
         $ext = pathinfo($file, PATHINFO_EXTENSION);
         // If MP4

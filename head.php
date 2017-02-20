@@ -6,7 +6,11 @@
 
 session_start();
 $path = "/var/www/html/";
-$_SESSION['dir'] = "drive/Drive/"; 
+if(isset($_SESSION['dir'])){
+    
+}else{
+    $_SESSION['dir'] = "drive/Drive/"; 
+}
 
 $stylesheets = scandir('css/');
 foreach($stylesheets as $file) {
