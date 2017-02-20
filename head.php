@@ -17,13 +17,13 @@ foreach($stylesheets as $file) {
         echo "<link rel='stylesheet' href='css/".$file."'>";
     }
 }
-$javascripts = scandir('js/');
+$javascripts = scandir('js/pre/');
 foreach($javascripts as $file) {
     if($file == "." || $file == ".."){
         continue;
     }
     else{
-        echo "<script src='js/".$file."'></script>";
+        echo "<script src='js/pre/".$file."'></script>";
     }
 }
 ?>
