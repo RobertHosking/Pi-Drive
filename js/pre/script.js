@@ -33,14 +33,21 @@ function reload(){
         }, 100); 
 }
 function focus_this(obj, session){
-  var selected = $(':focus');
-  var name = selected.attr('id');
-  if(selected.hasClass('folder')){
-    var options = '<button class="btn btn-default" data-toggle="modal" data-target="#renameModal">Rename</button><button class="btn btn-danger" data-toggle="modal" data-target="#trashModal">Move to Trash</button> ';
-    $('#file-options').html(options);
-  }
+   setTimeout(function(){
+      var selected = $(':focus');
+      var name = selected.attr('id');
+      if(selected.hasClass('folder')){
+        var options = '<div id="'+name+'"><button class="btn btn-default" data-toggle="modal" data-target="#renameModal">Rename</button><button class="btn btn-danger" data-toggle="modal" data-target="#trashModal">Move to Trash</button></div>';
+        $('#file-options').html(options);
+        var param = '<input type="hidden" name="folderTarget" value="'+name+'" />';
+        $('.target').html(param);
+      }
+   }, 150);
 }
 function focus_lost(){
-  setTimeout(function(){ $('#file-options').html(''); }, 3000);
+  setTimeout(function(){ $('#file-options').html(''); }, 100);
 }
 
+$('.modal').on('shown.bs.modal', function() {
+  $(this).find('[autofocus]').focus();
+});

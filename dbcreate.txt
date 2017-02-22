@@ -1,0 +1,3 @@
+CREATE DATABSE pi_drive;
+CREATE TABLE users(id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30), password VARCHAR(255), online TINYINT(1), streaming TINYINT(1), readonly TINYINT(1) DEFAULT 1);
+CREATE TABLE progress(user_id INT(6), series VARCHAR(255), path VARCHAR(255), season INT(6), episode INT(6));

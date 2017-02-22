@@ -6,5 +6,7 @@ if(isset($_REQUEST['folderName'])){
 }else{
     echo "failed";
 }
+   header('Refresh: 0; URL = index.php');
+
 
 ?>

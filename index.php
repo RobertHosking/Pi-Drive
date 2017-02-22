@@ -20,15 +20,8 @@ if(isset($_SESSION['username'])){
 
 ?>
 
-<div class="btn-wrapper" data-toggle="modal" data-target="#newfolder" >
-  <button class="circle" onclick="">
-     <img src="add.png" alt="" />
-  </button>
-</div>
-
-
 <!-- Modal -->
-<div class="modal fade" id="newfolder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="newfolder" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -37,9 +30,9 @@ if(isset($_SESSION['username'])){
       </div>
       <div class="modal-body">
        <form class="form-group" action="create-folder.php" method="POST">
-  <label class="col-md-4 control-label" for="folderName">Folder Name</label>  
+  <label class="col-md-4 control-label" for="folderName">Folder Name</label>
   
-  <input id="folderName" name="folderName" type="text" placeholder="e.x. My Folder" class="form-control input-md">
+  <input autofocus="autofocus" id="folderName" name="folderName" type="text" placeholder="e.x. My Folder" class="form-control input-md">
     
 
       </div>

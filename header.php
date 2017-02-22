@@ -50,7 +50,7 @@ foreach($result as $user){
 			<ul style="margin-right:30px;" class="nav navbar-nav navbar-right">
 
         <li class="active"><li><a href=":9091"><i class="fa fa-magnet fa-2x"></i> <span></span></a></li>
-                <li class="active"><li><a href=""><i class="fa fa-play fa-2x"></i> <span></span></a></li>
+                <li class="active"><li><a href="player.php"><i class="fa fa-play fa-2x"></i> <span></span></a></li>
                 <li class="active"><li><a href="logout.php">Logout<span></span></a></li>
 
 			</ul>

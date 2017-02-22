@@ -71,18 +71,24 @@
             if (isset($_POST['login']) && !empty($_POST['username']) 
                && !empty($_POST['password'])) {
                 
-               $result = mysqli_fetch_array (mysqli_query($conn,"SELECT name FROM users WHERE name='".$_POST['username']."' AND password='".$_POST['password']."'"));
+               $result = mysqli_fetch_array (mysqli_query($conn,"SELECT password FROM users WHERE name='".$_POST['username']."'"));
                if (isset($result)){
-                  $_SESSION['valid'] = true;
-                  $_SESSION['timeout'] = time();
-                  $_SESSION['username'] = $_POST['username'];
+                  $hash = hash('sha256', $_POST['password']);
+                  if ($hash == $result[0]) {
+                     $_SESSION['valid'] = true;
+                     $_SESSION['timeout'] = time();
+                     $_SESSION['username'] = $_POST['username'];
+                     
+                     $query = "UPDATE users SET online=1 WHERE name='".$_SESSION['username']."'";
+                     mysqli_query($conn, $query);
+                     
+                     header('Refresh: 0; URL = index.php');
+                  } else {
+                     $msg = 'Invalid password. '.$hash ;
+                  }
                   
-                  $query = "UPDATE users SET online=1 WHERE name='".$_SESSION['username']."'";
-                  mysqli_query($conn, $query);
-                  
-                  header('Refresh: 0; URL = index.php');
                }else{
-                  $msg = 'Wrong username or password';
+                  $msg = 'Wrong username';
                }
             }
          ?>
