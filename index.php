@@ -10,7 +10,7 @@ if(isset($_SESSION['username'])){
     require "check-session-timeout.php";
     require "header.php";
     require "functions.php";
-    echo "<body><br><br><br><br><br><br><br><br><div class='container'>";
+    echo "<body><br><br><br><br><br><br><br><br><div class='container grid'>";
     require "dashboard.php";
     echo "</div></body>";
     echo "<script>online(0);</script>";
@@ -45,5 +45,17 @@ if(isset($_SESSION['username'])){
     </div>
   </div>
 </div>
+
+<script>
+$( document ).ready( function(){
+  $('.grid').masonry({
+    // set itemSelector so .grid-sizer is not used in layout
+    itemSelector: '.grid-item',
+    // use element for option
+    columnWidth: 1
+  });
+});
+
+</script>
 
 </html>

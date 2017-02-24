@@ -91,10 +91,9 @@ foreach($javascripts as $file) {
           } else {
             $duration = "0";
           }
-          $url = "https://" . $_SERVER['HTTP_HOST']."/".$_SESSION['dir'].str_replace(' ', '%20', $file);
+          $url = "https://" . $_SERVER['HTTP_HOST']."/".str_replace(' ', '%20',$_SESSION['dir']).str_replace(' ', '%20', $file);
           $thumbnail = "";
           $playlist_hash = $playlist_hash."{name: '".$file."',description: 'test',duration: ".$duration.",thumbnail: [{srcset: '".$thumbnail."',type: 'image/jpeg',media: '(min-width: 400px;)'},{src: '".$thumbnail."'}],sources: [{ src: '".$url."', type: 'video/mp4' }]}".$d;
-         
         }
       }
       $playlist_hash = $playlist_hash."]";
@@ -106,7 +105,13 @@ foreach($javascripts as $file) {
     player.playlistUi();
     player.playlist(playlist_hash);
     // Initialize the playlist-ui plugin with no option (i.e. the defaults).
-    <?php echo "player.playlist.currentItem(".$_GET['episode'].");"?>
+    <?php 
+    
+    if(isset($_GET['episode'])){
+      $ep = $_GET['episode'] -1;
+      echo "player.playlist.currentItem(".$ep.");";
+    }
+    ?>
      player.playlist.autoadvance(2);
   </script>
 

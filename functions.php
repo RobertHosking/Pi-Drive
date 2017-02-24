@@ -1,7 +1,6 @@
 <?php
 function list_folders(){
     $assets = 'drive/Temp/Pi-Drive/Posters/';
-
     $tab = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     foreach(glob($_SESSION['dir']."*", GLOB_ONLYDIR) as $dir) {
         if($_SESSION['dir'] == "drive/Drive/Series/"){
@@ -16,7 +15,8 @@ function list_folders(){
                     copy('images/timthumb.jpg', $assets.$series.".jpg");
                 }
             }
-            echo "<a class='file' title='".$series."' onclick='change_dir(\"".$dir."\"); reload();' href='#'><img width='150px' src='".$assets.$series.".jpg'></a>";
+            render_series_poster($dir, $series, $assets.$series.".jpg");
+            #echo "<a class='file' title='".$series."' onclick='change_dir(\"".$dir."\"); reload();' href='#'><img width='150px' src='".$assets.$series.".jpg'></a>";
         }elseif(explode(" ",(explode("/",$dir)[4]))[0] == "Season") {
       
             $series = explode("/",$dir)[3];
@@ -41,12 +41,11 @@ function list_folders(){
                     copy('images/timthumb.jpg', $image);
                 }
             }
-            echo "<a class='file' title='Season ".$season_num."' onclick='change_dir(\"".$dir."\"); reload();' href='#'><img width='150px' src='".$image."'></a>";
-
+                render_season_poster($season_num, $dir, $image);
         }
         else{
             $dirname = basename($dir);
-            echo '<button id="'.$dirname.'" type="button" onclick=\'focus_this(this, "'.$_SESSION['dir'].'");\' onblur=\'focus_lost();\' ondblclick=\'change_dir("'.$_SESSION["dir"].$dirname.'"); reload();\' class="btn btn-secondary folder"><i class="fa  fa-folder"></i>'.$tab.$dirname.$tab.'</button>';
+            echo '<button id="'.$dirname.'" type="button" onclick=\'focus_this(this, "'.$_SESSION['dir'].'");\' onblur=\'focus_lost();\' ondblclick=\'change_dir("'.$dir.'"); reload();\' class="btn btn-secondary folder"><i class="fa  fa-folder"></i>'.$tab.$dirname.$tab.'</button>';
         }
     }
 }
@@ -81,7 +80,7 @@ function list_file($file, $g = NULL){
             // IF IN A SEASON
             }elseif(explode(" ",(explode("/",$_SESSION['dir'])[4]))[0] == "Season"){
                 $series = explode("/",$_SESSION['dir'])[3];
-                $season = explode(" ",(explode("/",$_SESSION['dir'])[4]))[0];
+                $season = explode(" ",(explode("/",$_SESSION['dir'])[4]))[1];
                 $data_file = $data_folder.$series." Season ".$season.".json";
                 if(!file_exists($data_file)){
                     $json = file_get_contents('https://api.themoviedb.org/3/search/tv?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&language=en-US&query='.urlencode($series).'&page=1');
@@ -98,13 +97,20 @@ function list_file($file, $g = NULL){
                 $title = $episode['name'];
                 $number = $episode['episode_number'];
                 $overview = $episode['overview'];
+                $filename = "S".str_pad($season, 2, '0', STR_PAD_LEFT)."E".str_pad($number, 2, '0', STR_PAD_LEFT)."-".$title.".mp4";
+                $episode_image = $assets.$series."-".$season."-".$number.".jpg";
+                if($filename != $file){
+                    rename($_SESSION['dir'].$file, $_SESSION['dir'].$filename);
+                }
+                if(!file_exists($episode_image)){
+                    file_put_contents($episode_image, fopen("http://image.tmdb.org/t/p/w500".$episode['still_path'], 'r'));
+                }
 		        echo "<tr><td>".$number."</td><td>".$title."</td><td>".$overview."</td><td><button class='btn btn-success'  onclick=\"location.href = 'player.php?episode=".$number."';\">Watch</button></td></tr>";
             }else{
-            #echo "<a class='file' title='".basename($file, ".mp4")."' onclick='online(1)' href='".$_SESSION['dir'].$file."'>".$file."</a>";
             }
         }
         if($ext == "jpg" || $ext == "png"){
-            echo "<a class='file' href='".$_SESSION['dir'].$file."'><img width='250px' src='".$_SESSION['dir'].$file."'></a>";
+            echo "<a class='file grid-item' href='".$_SESSION['dir'].$file."'><img width='250px' src='".$_SESSION['dir'].$file."'></a>";
         }
         else{
            // echo '<button type="button" onclick="location.href=\''.$_SESSION['dir'].$file.'\';" class="btn btn-primary file">'.$file.'</button>';
@@ -141,4 +147,38 @@ function rename_series($dir){
     }
 }
 
+function render_poster($dir, $series, $src){
+    echo '
+    <div  id="'.$dir.'" class="folder grid-item poster">
+        <div class="hovereffect">
+            <img onclick="change_dir(\''.$dir.'\'); reload();" width="200px"class="img-responsive" src="'.$src.'" alt="">
+            <div class="overlay">
+                <p class="icon-links center-block">
+                    <a href="" class="btn info" data-toggle="modal" data-target="#renameModal">
+                        Rename
+                    </a>
+                    <a href="" class="btn info" data-toggle="modal" data-target="#trashModal">
+                        Trash
+                    </a>
+                </p>
+            </div>
+        </div>
+   </div>
+';
+}
+function render_series_poster($dir, $series, $src){
+    echo '
+    <div  id="'.$dir.'" class="folder grid-item poster">
+        <div class="hovereffect">
+            <img onclick="change_dir(\''.$dir.'\'); reload();" width="200px"class="img-responsive" src="'.$src.'" alt="">
+            <div class="overlay">
+            </div>
+        </div>
+   </div>
+';
+}
+function render_season_poster($season_num, $dir, $image){
+    echo "<a class='file grid-item' title='Season ".$season_num."' onclick='change_dir(\"".$dir."\"); reload();' href='#'><img width='200px' src='".$image."'></a>";
+
+}
 ?>

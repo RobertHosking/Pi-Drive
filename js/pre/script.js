@@ -2,16 +2,7 @@ $('.navbar-lower').affix({
   offset: {top: 65}
 });
 
-$( document ).ready( function(){
-    
-    $('.grid').masonry({
-  // set itemSelector so .grid-sizer is not used in layout
-  itemSelector: '.grid-item',
-  // use element for option
-  columnWidth: '.grid-sizer',
-  percentPosition: true
-});
-});
+
 
 function change_dir(dir){
     $.post('/dir-controller.php', { ch_dir: dir},
@@ -37,13 +28,23 @@ function focus_this(obj, session){
       var selected = $(':focus');
       var name = selected.attr('id');
       if(selected.hasClass('folder')){
-        var options = '<div id="'+name+'"><button class="btn btn-default" data-toggle="modal" data-target="#renameModal">Rename</button><button class="btn btn-danger" data-toggle="modal" data-target="#trashModal">Move to Trash</button></div>';
+        var options = '<div class="options" id="'+name+'"><a style="cursor: pointer;" data-toggle="modal" data-target="#moveModal"><i  class="fa fa-sign-out"></i> Move</a><br>'+
+        '<a style="cursor: pointer;" data-toggle="modal" data-target="#renameModal"><i  class="fa fa-pencil-square-o "></i> Rename</a><br>'+
+        '<a style="cursor: pointer;" data-toggle="modal" data-target="#trashModal"><i class="fa fa-trash"></i> Trash</a></div>';
         $('#file-options').html(options);
-        var param = '<input type="hidden" name="folderTarget" value="'+name+'" />';
+        var param = '<input type="hidden" name="target" value="'+name+'" />';
         $('.target').html(param);
       }
    }, 150);
 }
+
+$(".poster").hover(function(){
+  console.log("asdfad");
+    var name = $(this).attr("id");
+    var param = '<input type="hidden" name="target" value="'+name+'" />';
+    $('.target').html(param);
+});
+
 function focus_lost(){
   setTimeout(function(){ $('#file-options').html(''); }, 100);
 }
@@ -51,3 +52,5 @@ function focus_lost(){
 $('.modal').on('shown.bs.modal', function() {
   $(this).find('[autofocus]').focus();
 });
+
+
