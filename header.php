@@ -109,32 +109,16 @@ foreach($result as $user){
       </div>
       <div class="modal-body">
       	<form class="form-horizontal">
-<fieldset>
-
-<!-- Form Name -->
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="urlField">From url</label>  
-  <div class="col-md-4">
-  <input id="urlField" name="urlField" type="text" placeholder="e.x. https://www.fileserver.com/file.ext" class="form-control input-sm">
-    
-  </div>
-</div>
-<!-- File Button --> 
-<div class="form-group">
-  <label class="col-md-4 control-label" for="fileButton"></label>
-  <div class="col-md-4">
-    <input id="fileButton" name="fileButton" class="input-file" type="file">
-  </div>
-</div>
-
-</fieldset>
-</form>
+<form action="upload.php" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Go!</button>
+        </form>
+
       </div>
     </div>
   </div>
